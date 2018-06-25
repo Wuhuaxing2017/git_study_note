@@ -632,9 +632,54 @@ $git branch -d dev
 
 ### 5、feature分支
 
+现在才发现本来做了的笔记，现在却没了。想起这个项目的readme文件写的，一定要保存和上传！！！
 
+一定要记得保存和上传！！！
+
+一定要记得保存和上传！！！
+
+重要的事情说三遍！！！
+
+---
+
+对于有实验性质的新功能，我们不想把主分支搞乱，那就必须新建一个feature分支，和bug分支一样，然后完成功能、合并、删除...
+
+> 如果做完了功能，正准备合并，但临时取消功能，需要销毁写那个资料
+
+```bash
+$ git branch -d feature-test
+error: The branch 'feature-test' is not fully merged.
+If you are sure you want to delete it, run 'git branch -D feature-test'.
+```
+
+这样是不能删除的，因为分支还没合并，这个应该是git的保护机制。可以使用`git branch -D feature-test`强制删除！
 
 ### 6、多人协作
+
+从远程库克隆时，远程和本地的master分支自行对应，`git remote`可以查看远程库的信息，`-v`显示详细信息。
+
+#### 推送分支
+
+`git push origin dev`就可以推送到具体分支
+
+但是，并不是一定要把本地分支往远程推送，那么，哪些分支需要推送，哪些不需要呢？
+
+- `master`分支是主分支，因此要时刻与远程同步；
+- `dev`分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；
+- bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；
+- feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
+
+总之，就是在Git中，分支完全可以在本地自己藏着玩，是否推送，视你的心情而定！
+
+#### 抓取分支
+
+多人完成一个项目，同事的dev分支在github上提交，现在你再提交也没有用，因为我的提交有冲突，解决的方法就是`git pull`把最新的提交拉到本地，然后合并，解决冲突，然后`git push`推送。
+
+如果现在还报错，那么就是本地dev分支和远程`origin/dev`分支没有链接
+
+```bash
+$ git branch --set-upstream-to=origin/dev dev
+```
 
 
 
