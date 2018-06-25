@@ -687,22 +687,98 @@ $ git branch --set-upstream-to=origin/dev dev
 
 - 创建远程分支：`git push origin test`，其实就是曲线救国
 - 查看分支信息：`git branch -v`
-- 查看分支详细信息：`git branch -vv`，可以看到远程对应的分支
-- ​
+- 查看分支详细信息：`git branch -vv`，可以看到远程对应的分支，也有可能未做对应
+- 查看远程库信息：`git remote `也可以加上`-v`查看详细信息
 
 ### 7、Rebase
 
+多人协作，很容易有冲突。只能pull解决冲突然后push，到最后，分支表变成这样...
 
+```
+$ git log --graph --pretty=oneline --abbrev-commit
+* d1be385 (HEAD -> master, origin/master) init hello
+*   e5e69f1 Merge branch 'dev'
+|\  
+| *   57c53ab (origin/dev, dev) fix env conflict
+| |\  
+| | * 7a5e5dd add env
+| * | 7bd91f1 add new env
+| |/  
+* |   12a631b merged bug fix 101
+|\ \  
+| * | 4c805e2 fix bug 101
+|/ /  
+* |   e1e9c68 merge with no-ff
+|\ \  
+| |/  
+| * f52c633 add merge
+|/  
+*   cf810e4 conflict fixed
+```
+
+```bash
+吴华兴@DESKTOP-0R299BJ MINGW64 /d/git/git学习笔记 (master)
+$ git log --graph --pretty=oneline --abbrev-commit
+* 50d6f17 (HEAD -> master) a
+* 8a7b781 test托尔斯泰
+* 508157d (origin/master) 提交就不能用空的信息吗？太不人性化了！！！差评...
+* 5a6c464 抓取分支
+```
+
+在这里Git会将HEAD指向和origin/master远程位置标出来，可以看到我的远程比本地少了两次提交。
+
+`git rebase`的作用就是将分叉的历史“整理”成一条直线，原理很简单，就是把本地提交的位置“挪动”到远程点之后，那么本地提交就和远程一致了。这种方法虽然能让log更直观，却把本地分叉的提交点修改了，那不是真实的。
+
+rebase的目的是让我们查看历史提交的变化时更加容易，因为分叉提交需要三方对比。
 
 ## 七、标签管理
 
-
+标签tag，顾名思义。标签也可以理解为某个版本号，虽然每次提交都有编号，但不好记。
 
 ### 1、创建标签
+
+创建标签很简单
+
+```bash
+git tag v2.10
+```
+
+这样就创建好了一个新标签
+
+和其他命令一样，加上名字`git tag`就可以查看所有标签
+
+也可以对某次提交的版本号加标签，先用`git log`查看版本号,然后把“抓取分支”这个提交打个标签
+
+```bash
+git tag v2.11 5a6c4
+```
+
+这样就有了标签，一个提交可以命名多个标签，反之不行......
+
+```bash
+5a6c464 (tag: wu_tag, tag: v2.11) 抓取分支
+8677a9e 增加bug小节内容
+```
+
+使用`git show v2.11`这样的形式可以查看标签对应提交的修改和说明
 
 
 
 ### 2、操作标签
+
+`git tag -d v0.001`可以删除标签，由于创建的标签只存储在本地，所以可以在本地删除完。
+
+如果要推送到远程，那么可以用`git push origin v2.10`的形式推送；
+
+还可以用`git push origin --tags`推送全部未推送的本地标签
+
+**需要注意的是！**
+
+如果要删除远程标签，那么必须先删除本地标签，再推送“删除”这个修改操作。
+
+```bash
+git push origin :refs/tags/v2.10
+```
 
 
 
