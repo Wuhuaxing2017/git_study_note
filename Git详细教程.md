@@ -681,7 +681,14 @@ If you are sure you want to delete it, run 'git branch -D feature-test'.
 $ git branch --set-upstream-to=origin/dev dev
 ```
 
+其实还有个更好理解的方法，就是切换到dev分支，然后push的时候加上`-u`，那么它们就自动有了链接。
 
+**拓展**
+
+- 创建远程分支：`git push origin test`，其实就是曲线救国
+- 查看分支信息：`git branch -v`
+- 查看分支详细信息：`git branch -vv`，可以看到远程对应的分支
+- ​
 
 ### 7、Rebase
 
