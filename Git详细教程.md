@@ -626,7 +626,7 @@ $git branch -d dev
 
 `git stash list`可以查看有“冷冻”的列表
 
-`git stash apply`恢复原样；`git stash drop`删除stash的内容
+`git stash apply`恢复原样；`git stash drop`删除stash的内容，这两个后面加上具体哪个就可以指定恢复或删除，例如`git stash apply stash@{0}`就可以恢复`stash@{0}`这个"冷冻"的工作区。
 
 `git stash pop`恢复并删除stash内容
 
