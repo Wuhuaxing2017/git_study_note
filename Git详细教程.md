@@ -338,7 +338,7 @@ $ git reset --hard 3628164
 HEAD is now at 3628164 append GPL
 ```
 
-版本号没必要写全，前几位就可以了，Git会自动去找。当然也不能只写前一两位，因为Git可能会找到多个版本号，就无法确定是哪一个了。
+版本号没必要写全，前几位就可以了，Git会自动去找。当然也不能只写前一两位，因为Git可能会找到多个版本git号，就无法确定是哪一个了。
 
 再小心翼翼地看看readme.txt的内容：
 
@@ -779,6 +779,67 @@ git tag v2.11 5a6c4
 ```bash
 git push origin :refs/tags/v2.10
 ```
+
+### 3、[码云](https://gitee.com/)	 ![img](https://gitee.com/logo.svg?20171024)
+
+和github一样，码云也能作为Git的远程库。而且速度快了很多。
+
+一个本地库可以同时关联github和gitee两个远程库，但要满足以下要求：
+
+- 登录帐号要一样。主要是因为本地git生成ssh key公钥的时候要邮箱号，如果不同邮箱。那么再生成一个ssh key的时候，原来的就会失效。
+
+- 远程库连接名称不能相同，github连接远程库的时候默认叫origin，但要是gitee也叫这个那么git就识别不出了。所以要改名,然后添加项目链接。
+
+  ```bash
+  git remote add gitee_origin git@giteeXXXXnote.git
+  ```
+
+  如果要修改其他链接的名字，那就要先删除原名
+
+  ```bash
+  git remote rm origin
+  ```
+
+- 查看远程库信息
+
+  ```bash
+  git remote -v
+  ```
+
+- 公钥
+
+  ```bash
+  # 公钥位置在这
+  cd ~/.ssh
+
+  吴华兴@DESKTOP-0R299BJ MINGW64 ~/.ssh
+  $ ls
+  ''$'\033''[A'       id_rsa       known_hosts   y.pub
+  ''$'\033''[A.pub'   id_rsa.pub   y
+
+  ```
+
+  其实可以直接
+
+  ```bash
+  吴华兴@DESKTOP-0R299BJ MINGW64 ~/.ssh
+  $ cat ~/.ssh/id_rsa.pub
+  ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAshsS8AgpvrsUmtjnSnC9cMw2yuLKHTO/5NyhGss9lRwxrQ1cTZuBK7EEMN3sOIfaZfRuGyjdMWsI1fb1mqFYBRa0WY8XNZXpRX9YxUw/feGgVQE3CKcI2kT8l/E47aQ4H20dj/83IQ0jump3MNnDNKmLUXcJyCAPQljhhq018D0WqJQRrL3zjLEQk1kz4euw7Xpxumihx1w8hBWNxANXRQTKD2j/0SFV3vH1LiOesY4JnTooaH6sAz8DNoMcjSn4aIXj7os41BhQz8WT4oZV2KMkUwjF57wt+xg5CehYbROifkgCbDbE95Y9NzYhZpbAXA7g1hSxZB 1534459631@qq.com
+  # 当然中间我删了一部分东西，但大部分都是一样的
+  ```
+
+  #### 生成新的ssh sky
+
+  ```bash
+  ssh-keygen -t rsa -C "email@email.com"
+  ```
+
+  #### 测试是否配置成功
+
+  ```bash
+  ssh -T git@github.com
+  ssh -T git@gitee.com
+  ```
 
 
 
