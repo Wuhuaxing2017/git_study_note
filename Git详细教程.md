@@ -845,6 +845,14 @@ git push origin :refs/tags/v2.10
 
 ## 八、自定义Git
 
+让Git显示颜色，会让命令输出看起来更醒目：
+
+```bash
+$ git config --global color.ui true
+```
+
+这样，Git会适当地显示不同的颜色
+
 ### 1、忽略特殊文件
 
 
